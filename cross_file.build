@@ -1,18 +1,17 @@
 [binaries]
-c       = 'clang-5.0'
-cpp     = 'clang++-5.0'
-ld      = 'llvm-link-5.0'
-ar      = 'llvm-ar-5.0'
-as      = 'llvm-as-5.0'
-size    = 'llvm-size-5.0'
-objdump = 'llvm-objdump-5.0'
+c       = 'clang'
+cpp     = 'clang++'
+ld      = 'llvm-link'
+ar      = 'llvm-ar'
+as      = 'llvm-as'
+size    = 'llvm-size'
+objdump = 'llvm-objdump'
 objcopy = 'arm-none-eabi-objcopy'
 strip   = 'arm-none-eabi-strip'
 gdb     = 'arm-none-eabi-gdb'
-terminal= 'x-terminal-emulator'
-openocd = '/usr/local/bin/openocd'
+openocd = 'openocd'
 
-[properties]
+[built-in options]
 c_args      = [
                '--target=arm-none-eabi',    # define target for clang
                '-mthumb',                   # define language
@@ -27,6 +26,7 @@ c_args      = [
                '-ffreestanding',
 
                #------------------------------------
+               '-Wno-reserved-identifier',
                '-Wno-reserved-id-macro',
                '-Wno-unused-macros',
                '-Wno-documentation',

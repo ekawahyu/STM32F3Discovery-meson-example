@@ -24,11 +24,11 @@ c_args += '-mcpu=@0@'.format( cpu )
 #==============================================================================#
 # convenience function : link correct C-runtime for each controller
 # TODO: use llvm compiler-rt
-arch       = (host_machine.cpu() == 'cortex-m0') or (host_machine.cpu() == 'cortex-m0+') or (host_machine.cpu() == 'cortex-m1') ? 'armv6-m'  : ''
-arch      += (host_machine.cpu() == 'cortex-m3') ?                                                                                'armv7-m'  : ''
-arch      += (host_machine.cpu() == 'cortex-m4') or (host_machine.cpu() == 'cortex-m7') ?                                         'armv7e-m' : ''
+arch       = (host_machine.cpu() == 'cortex-m0') or (host_machine.cpu() == 'cortex-m0+') or (host_machine.cpu() == 'cortex-m1') ? 'v6-m'  : ''
+arch      += (host_machine.cpu() == 'cortex-m3') ?                                                                                'v7-m'  : ''
+arch      += (host_machine.cpu() == 'cortex-m4') or (host_machine.cpu() == 'cortex-m7') ?                                         'v7e-m' : ''
 
-link_deps +=  meson.get_compiler('c').find_library('/usr/lib/gcc/arm-none-eabi/4.9.3/@0@/libgcc'.format(arch))
+link_deps +=  meson.get_compiler('c').find_library('/Applications/ARM/lib/gcc/arm-none-eabi/10.3.1/thumb/@0@/nofp/libgcc'.format(arch))
 
 #==============================================================================#
 # convenience function : use correct Floating Point option
@@ -37,7 +37,7 @@ link_deps +=  meson.get_compiler('c').find_library('/usr/lib/gcc/arm-none-eabi/4
 #==============================================================================#
 # we have to define the std headers : for stdint.h
 if meson.get_compiler('c').get_id() == 'clang'
-  incdirs += include_directories('/usr/lib/arm-none-eabi/include/') # bare-metal : std header includes
+  incdirs += include_directories('/Applications/ARM/lib/gcc/arm-none-eabi/10.3.1/include/') # bare-metal : std header includes
 endif
 
 #==============================================================================#
@@ -70,7 +70,6 @@ objcopy  = '@0@'.format(find_program('objcopy').path())
 objdump  = '@0@'.format(find_program('objdump').path())
 size     = '@0@'.format(find_program('size').path())
 gdb      = '@0@'.format(find_program('gdb').path())
-terminal = '@0@'.format(find_program('terminal',required:false).path())
 openocd  = '@0@'.format(find_program('openocd', required:false).path())
 
 #==============================================================================#
@@ -121,10 +120,10 @@ endif
 #==============================================================================#
 # support target commands
 run_target('gdb',
-         command : [terminal, '--working-directory=@0@'.format(meson.source_root()), '-e', gdb, '-q', '@0@/main.elf'.format(meson.current_build_dir())])
+         command : [gdb, '-q', '@0@/main.elf'.format(meson.current_build_dir())])
 
 run_target('openocd',
-         command : [terminal, '-e', openocd, '-f', 'interface/stlink-v2.cfg', '-f' , 'target/stm32f3x.cfg'])
+         command: [openocd, '-f', 'interface/stlink-v2.cfg', '-f' , 'target/stm32f3x.cfg'])
 
 #==============================================================================#
 

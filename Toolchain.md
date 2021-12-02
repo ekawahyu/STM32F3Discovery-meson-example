@@ -5,16 +5,16 @@ On Ubuntu :
 
       sudo apt-get install binutils-arm-none-eabi gcc-arm-none-eabi gdb-arm-none-eabi  libnewlib-arm-none-eabi libnewlib-arm-none-eabi
 
-## LLVM-5.0
+## LLVM
 
-Also we want to install llvm-5.0:
+Also we want to install llvm:
 
       wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
-      sudo add-apt-repository -y 'deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-5.0 main'
-      sudo add-apt-repository -y 'deb-src http://apt.llvm.org/xenial/ llvm-toolchain-xenial-5.0 main'
+      sudo add-apt-repository -y 'deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial main'
+      sudo add-apt-repository -y 'deb-src http://apt.llvm.org/xenial/ llvm-toolchain-xenial main'
 
       sudo apt-get update
-      sudo apt-get -y install clang-5.0 llvm-5.0 lld-5.0
+      sudo apt-get -y install clang llvm lld
 
 ## Python3 / Meson / Ninja
 
@@ -57,3 +57,13 @@ As an example I took version 0.10
 
 this installs version 0.10 besides your current openocd installation.
 you have to call `/usr/local/bin/openocd` instead of just `openocd` to use the newer version
+
+# Toolchain Installation (macOS with brew)
+
+Before installing packages with brew, you may want to install Python 3.x with Miniconda. Detail instruction can be found from [here](https://docs.conda.io/en/latest/miniconda.html)
+
+    brew install gcc-arm-embedded
+    brew install llvm
+    brew install openocd
+    brew install meson
+    brew install ninja

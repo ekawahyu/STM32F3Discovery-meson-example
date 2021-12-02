@@ -9,12 +9,11 @@ objdump = 'arm-none-eabi-objdump'
 objcopy = 'arm-none-eabi-objcopy'
 strip   = 'arm-none-eabi-strip'
 gdb     = 'arm-none-eabi-gdb'
-terminal= 'x-terminal-emulator'
-openocd = '/usr/local/bin/openocd'
+openocd = 'openocd'
 
 exe_wrapper = 'meson_exe_wrapper.sh'
 
-[properties]
+[built-in options]
 c_args      = [
                '-mthumb',                   # define language
                #------------------------------------
@@ -24,7 +23,7 @@ c_args      = [
                '-ffunction-sections',       # each function to a seperate section ==> Code-optimization / deletion
                '-fdata-sections',           # each variable to a seperate section ==> Code-optimization / deletion
 
-              '-Wall',
+               '-Wall',
                '-ffreestanding',
                #------------------------------------
                # '-flto',
